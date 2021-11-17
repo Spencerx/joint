@@ -636,6 +636,10 @@ export namespace g {
 
         intersectionWithLineFromCenterToPoint(p: PlainPoint | string, angle?: number): Point;
 
+        intersectWithPath(path: Path, opt?: SubdivisionsOpt): boolean;
+
+        intersectWithRect(r: Rect): boolean;
+
         leftLine(): Line;
 
         leftMiddle(): Point;

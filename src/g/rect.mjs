@@ -2,6 +2,7 @@ import { toRad } from './geometry.helpers.mjs';
 import { Line } from './line.mjs';
 import { Point } from './point.mjs';
 import { Ellipse } from './ellipse.mjs';
+import { Polyline } from './polyline.mjs';
 
 const {
     abs,
@@ -267,6 +268,27 @@ Rect.prototype = {
         }
         if (result && angle) result.rotate(center, -angle);
         return result;
+    },
+
+    intersectWithRect: function(r) {
+        const { x: x1, y: y1, width: w1, height: h1 } = this;
+        const { x: x2, y: y2, width: w2, height: h2 } = r;
+        // No intersection found
+        if (x2 + w2 <= x1 || y2 + h2 <= y1 || x2 >= x1 + w1 || y2 >= y1 + h1) return false;
+        return true;
+    },
+
+    intersectWithPath(path, opt) {
+        return this.toPolyline().intersectWithPath(path, Object.assign({ closed: true }, opt));
+    },
+
+    toPolyline() {
+        return new Polyline([
+            this.topLeft(),
+            this.topRight(),
+            this.bottomRight(),
+            this.bottomLeft()
+        ]);
     },
 
     leftLine: function() {

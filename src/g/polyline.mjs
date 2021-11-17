@@ -244,11 +244,6 @@ Polyline.prototype = {
         return false;
     },
 
-    toPolygon() {
-        const { start, end, points } = this;
-        return start.equals(end) ? this.clone() : new Polyline([...points, start]);
-    },
-
     intersectWithPolygon: function(polygon, opt) {
         return this.intersectWithPolyline(polygon.toPolygon(), opt) || polygon.containsPoint(this.start);
     },
@@ -303,6 +298,11 @@ Polyline.prototype = {
             }
         }
         return false;
+    },
+
+    toPolygon() {
+        const { start, end, points } = this;
+        return start.equals(end) ? this.clone() : new Polyline([...points, start]);
     },
 
     // Returns a convex-hull polyline from this polyline.
